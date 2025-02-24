@@ -1,0 +1,115 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Sign Up</h2>
+
+  <div class="card p-4 shadow-sm mx-auto" style="max-width: 400px">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <!-- First Name Field -->
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          class="form-control"
+          formControlName="firstName"
+          required
+        />
+        <div
+          *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']"
+          class="text-danger"
+        >
+          First name is required.
+        </div>
+      </div>
+
+      <!-- Last Name Field -->
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          class="form-control"
+          formControlName="lastName"
+          required
+        />
+        <div
+          *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']"
+          class="text-danger"
+        >
+          Last name is required.
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          required
+        />
+        <div
+          *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']"
+          class="text-danger"
+        >
+          Email is required.
+        </div>
+        <div
+          *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']"
+          class="text-danger"
+        >
+          Please enter a valid email address.
+        </div>
+      </div>
+
+      <!-- Username Field -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          formControlName="username"
+          required
+        />
+        <div
+          *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['required']"
+          class="text-danger"
+        >
+          Username is required.
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          required
+        />
+        <div
+          *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']"
+          class="text-danger"
+        >
+          Password is required.
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="goToLogin()"
+        >
+          Already have an account? Login
+        </button>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </div>
+    </form>
+  </div>
+</div>

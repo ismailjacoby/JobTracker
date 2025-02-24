@@ -7,7 +7,7 @@ import com.ismailjacoby.jobtrackerapi.enums.UserRole;
 import com.ismailjacoby.jobtrackerapi.exception.AccountNotActiveException;
 import com.ismailjacoby.jobtrackerapi.exception.NotFoundException;
 import com.ismailjacoby.jobtrackerapi.form.LoginForm;
-import com.ismailjacoby.jobtrackerapi.form.RegisterForm;
+import com.ismailjacoby.jobtrackerapi.form.SignupForm;
 import com.ismailjacoby.jobtrackerapi.repository.UserRepository;
 import com.ismailjacoby.jobtrackerapi.service.declaration.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegisterForm form) {
+    public void signup(SignupForm form) {
         if(form == null) {
             throw new IllegalArgumentException("Form cannot be null");
         }

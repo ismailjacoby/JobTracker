@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { JobListComponent } from './components/job/job-list/job-list.component';
 import { JobCreateComponent } from './components/job/job-create/job-create.component';
 import { FormsModule } from '@angular/forms';
-import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +15,6 @@ import { AuthComponent } from './components/auth/auth.component';
     SidebarComponent,
     JobListComponent,
     JobCreateComponent,
-    AuthComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, FormsModule],
   providers: [],

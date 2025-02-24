@@ -2,7 +2,7 @@ package com.ismailjacoby.jobtrackerapi.controller;
 
 import com.ismailjacoby.jobtrackerapi.dto.AuthDTO;
 import com.ismailjacoby.jobtrackerapi.form.LoginForm;
-import com.ismailjacoby.jobtrackerapi.form.RegisterForm;
+import com.ismailjacoby.jobtrackerapi.form.SignupForm;
 import com.ismailjacoby.jobtrackerapi.service.declaration.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +24,8 @@ public class UserController {
         return userService.login(form);
     }
 
-    @PostMapping("/register")
-    public void register(@RequestBody @Valid RegisterForm form) {
+    @PostMapping("/signup")
+    public void signup(@RequestBody @Valid SignupForm form) {
         userService.register(form);
     }
 }
