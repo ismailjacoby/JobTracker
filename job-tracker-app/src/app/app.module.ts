@@ -7,8 +7,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { JobListComponent } from './components/job/job-list/job-list.component';
 import { JobCreateComponent } from './components/job/job-create/job-create.component';
-import { JobComponent } from './components/job/job.component';
 import { FormsModule } from '@angular/forms';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
     SidebarComponent,
     JobListComponent,
     JobCreateComponent,
-    JobComponent,
+    AuthComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, FormsModule],
   providers: [],

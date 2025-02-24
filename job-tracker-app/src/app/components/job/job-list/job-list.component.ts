@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Job } from '../../../models/job';
+import { JobStatus } from '../../../models/job-status';
+import { JobService } from '../../../services/job.service';
 
 @Component({
   selector: 'app-job-list',
@@ -7,16 +9,18 @@ import { Job } from '../../../models/job';
   templateUrl: './job-list.component.html',
   styleUrl: './job-list.component.css',
 })
-export class JobListComponent {
+export class JobListComponent implements OnInit {
   searchTerm: string = '';
 
   jobs: Job[] = [];
 
-  addJob() {
-    alert('Adds a Job');
+  constructor(private jobService: JobService) {}
+
+  ngOnInit(): void {
+    this.jobs = this.jobService.getJobs();
   }
 
   searchJobs() {
-    alert('Searching a Job...');
+    this.jobs = this.jobService.searchJobs(this.searchTerm);
   }
 }

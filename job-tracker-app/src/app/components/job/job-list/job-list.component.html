@@ -34,16 +34,16 @@
           <th scope="col">Location</th>
           <th scope="col">Status</th>
           <th scope="col">Date applied</th>
-          <th scope="col">Link</th>
+          <th scope="col">View Details</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Odoo</td>
-          <td>Junior Fullstack Developer</td>
-          <td>Luxembourg, Luxembourg</td>
-          <td>Status</td>
-          <td>24-02-2025</td>
+        <tr *ngFor="let job of jobs">
+          <td>{{ job.company }}</td>
+          <td>{{ job.title }}</td>
+          <td>{{ job.location }}</td>
+          <td>{{ job.status }}</td>
+          <td>{{ job.dateApplied | date : "dd.MM.yyyy" }}</td>
           <td>
             <button class="btn btn-sm btn-outline-primary">View</button>
           </td>
