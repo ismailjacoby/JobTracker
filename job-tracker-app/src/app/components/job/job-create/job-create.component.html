@@ -2,90 +2,159 @@
   <h2 class="text-center mb-4">Add New Job</h2>
 
   <div class="card p-4 shadow-sm">
-    <form (ngSubmit)="onSubmit()">
-      <!-- Company Name -->
+    <!-- Form-->
+    <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <label for="company" class="form-label">Company Name</label>
+        <label for="company" class="form-label">Company Name:</label>
         <input
           type="text"
           id="company"
           class="form-control"
-          name="company required"
-          [(ngModel)]="company"
-          required
+          formControlName="company"
         />
+        <div
+          class="error-msg"
+          *ngIf="
+            jobForm.get('company')?.invalid && jobForm.get('company')?.touched
+          "
+        >
+          Company name is required.
+        </div>
       </div>
 
-      <!-- Job Position -->
+      <!-- Job Title -->
       <div class="mb-3">
-        <label for="title" class="form-label">Job Title</label>
+        <label for="title" class="form-label">Job Title:</label>
         <input
           type="text"
           id="title"
           class="form-control"
-          name="position"
-          [(ngModel)]="title"
-          required
+          formControlName="title"
         />
+        <div
+          class="error-msg"
+          *ngIf="jobForm.get('title')?.invalid && jobForm.get('title')?.touched"
+        >
+          Job Title is required.
+        </div>
       </div>
 
       <!-- Location -->
       <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
+        <label for="location" class="form-label">Location:</label>
         <input
           type="text"
           id="location"
           class="form-control"
-          name="location"
-          [(ngModel)]="location"
-          required
+          formControlName="location"
         />
+        <div
+          class="error-msg"
+          *ngIf="
+            jobForm.get('location')?.invalid && jobForm.get('location')?.touched
+          "
+        >
+          Job Title is required.
+        </div>
       </div>
 
-      <!-- Job Status -->
+      <!-- Status -->
       <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select
-          id="status"
-          class="form-select"
-          name="status"
-          [(ngModel)]="status"
-          required
-        >
-          <option value="Applied">Applied</option>
-          <option value="Call">First Call</option>
-          <option value="Interview">Interview</option>
-          <option value="Rejected">Rejected</option>
+        <label for="status" class="form-label">Status:</label>
+        <select id="status" class="form-select" formControlName="status">
+          <option value="APPLIED">Applied</option>
+          <option value="INTERVIEW_SCHEDULED">Interview Scheduled</option>
+          <option value="INTERVIEWED">Interviewed</option>
+          <option value="OFFER_RECEIVED">Offer Received</option>
+          <option value="ACCEPTED">Accepted</option>
+          <option value="REJECTED">Rejected</option>
+          <option value="WITHDRAWN">Withdrawn</option>
+          <option value="NO_RESPONSE">No Response</option>
         </select>
+        <div
+          class="error-msg"
+          *ngIf="
+            jobForm.get('status')?.invalid && jobForm.get('status')?.touched
+          "
+        >
+          Current job application status is required.
+        </div>
       </div>
 
       <!-- Date Applied -->
       <div class="mb-3">
-        <label for="date" class="form-label">Date Applied</label>
+        <label for="dateApplied" class="form-label">Date Applied:</label>
         <input
           type="date"
-          id="date"
+          id="dateApplied"
           class="form-control"
-          name="dateApplied"
-          [(ngModel)]="dateApplied"
-          required
+          formControlName="dateApplied"
         />
+        <div
+          class="error-msg"
+          *ngIf="
+            jobForm.get('dateApplied')?.invalid &&
+            jobForm.get('dateApplied')?.touched
+          "
+        >
+          Application Date is required.
+        </div>
       </div>
 
-      <!-- Job Link -->
+      <!-- Link -->
       <div class="mb-3">
-        <label for="link" class="form-label">Job Link</label>
+        <label for="link" class="form-label">Link:</label>
         <input
-          type="url"
+          type="text"
           id="link"
           class="form-control"
-          name="link"
-          [(ngModel)]="link"
+          formControlName="link"
+        />
+        <div
+          class="error-msg"
+          *ngIf="jobForm.get('link')?.invalid && jobForm.get('link')?.touched"
+        >
+          Link is required.
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea
+          type="textarea"
+          rows="3"
+          id="description"
+          class="form-control"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <!-- Salary -->
+      <div class="mb-3">
+        <label for="salary" class="form-label">Salary:</label>
+        <input
+          type="number"
+          id="salary"
+          class="form-control"
+          formControlName="salary"
         />
       </div>
 
-      <!-- Button -->
+      <!-- Notes -->
+      <div class="mb-3">
+        <label for="notes" class="form-label">Input:</label>
+        <input
+          type="text"
+          id="notes"
+          class="form-control"
+          formControlName="notes"
+        />
+      </div>
+
+      <!-- Buttons -->
       <div class="d-flex justify-content-between">
+        <!-- Cancel Button -->
         <button
           type="button"
           class="btn btn-outline-secondary"
@@ -93,7 +162,13 @@
         >
           Cancel
         </button>
-        <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="jobForm.invalid"
+        >
           Save Job
         </button>
       </div>

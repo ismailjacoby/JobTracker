@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JobStatus } from '../../../models/job-status';
 import { JobService } from '../../../services/job.service';
-import { Job } from '../../../models/job';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-job-create',
@@ -10,30 +9,35 @@ import { Job } from '../../../models/job';
   templateUrl: './job-create.component.html',
   styleUrl: './job-create.component.css',
 })
-export class JobCreateComponent {
-  company: string = '';
-  title: string = '';
-  location: string = '';
-  status: JobStatus = JobStatus.APPLIED;
-  dateApplied: Date = new Date('2025-02-24');
-  link: string = '';
+export class JobCreateComponent implements OnInit {
+  jobForm: FormGroup = new FormGroup({});
 
-  constructor(private router: Router, private jobService: JobService) {}
+  constructor(
+    private router: Router,
+    private jobService: JobService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.jobForm = this.formBuilder.group({
+      company: ['', Validators.required],
+      title: ['', Validators.required],
+      location: ['', Validators.required],
+      status: ['', Validators.required],
+      dateApplied: ['', Validators.required],
+      link: ['', Validators.required],
+      description: [''],
+      salary: [''],
+      notes: [''],
+    });
+  }
 
   onSubmit() {
-    const newJob: Job = {
-      id: Date.now(),
-      company: this.company,
-      title: this.title,
-      location: this.location,
-      status: this.status,
-      dateApplied: this.dateApplied,
-      link: this.link,
-    };
-
-    this.jobService.addJob(newJob);
-
-    this.router.navigate(['/job/list']);
+    if (this.jobForm.valid) {
+      let job = this.jobForm.value;
+      this.jobService.addJob(job);
+      this.router.navigate(['/job/list']);
+    }
   }
 
   cancel() {

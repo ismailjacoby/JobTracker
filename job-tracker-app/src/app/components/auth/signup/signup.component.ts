@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignupForm } from '../../../models/signup-form';
@@ -9,11 +9,13 @@ import { SignupForm } from '../../../models/signup-form';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
-export class SignupComponent {
-  signupForm: FormGroup;
+export class SignupComponent implements OnInit {
+  signupForm: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.signupForm = this.fb.group({
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
+
+  ngOnInit(): void {
+    this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
@@ -38,9 +40,7 @@ export class SignupComponent {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      const formValue: SignupForm = this.signupForm.value;
-      console.log('Signup data submitted:', formValue);
-      // Here you can add the API call to handle sign up
+      // Implement Sing up
     }
   }
 

@@ -7,14 +7,22 @@ import { Job } from '../models/job';
 export class JobService {
   private jobs: Job[] = [];
 
-  constructor() {}
-
-  getJobs(): Job[] {
-    return this.jobs;
+  constructor() {
+    let savedJobs = localStorage.getItem('jobs');
+    this.jobs = savedJobs ? JSON.parse(savedJobs) : [];
   }
 
   addJob(job: Job) {
     this.jobs.push(job);
+    localStorage.setItem('jobs', JSON.stringify(this.jobs));
+  }
+
+  getJob(id: number): Job | undefined {
+    return this.jobs.find((job) => job.id === id);
+  }
+
+  getJobs(): Job[] {
+    return this.jobs;
   }
 
   searchJobs(searchTerm: string): Job[] {

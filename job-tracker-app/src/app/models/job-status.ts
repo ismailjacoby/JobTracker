@@ -1,6 +1,10 @@
 export enum JobStatus {
-  APPLIED = 'Applied',
-  CALL = 'First Call',
-  INTERVIEW = 'Interview',
-  REJECTED = 'Rejected',
+  APPLIED,
+  INTERVIEW_SCHEDULED,
+  INTERVIEWED,
+  OFFER_RECEIVED,
+  ACCEPTED,
+  REJECTED,
+  WITHDRAWN,
+  NO_RESPONSE,
 }

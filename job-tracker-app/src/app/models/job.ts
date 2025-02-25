@@ -8,4 +8,7 @@ export interface Job {
   status: JobStatus;
   dateApplied: Date;
   link: string;
+  description: string;
+  salary: number;
+  notes: string;
 }

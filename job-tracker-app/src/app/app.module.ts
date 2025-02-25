@@ -9,16 +9,19 @@ import { JobListComponent } from './components/job/job-list/job-list.component';
 import { JobCreateComponent } from './components/job/job-create/job-create.component';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { JobModule } from './components/job/job.module';
+import { AuthModule } from './components/auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidebarComponent,
-    JobListComponent,
-    JobCreateComponent,
-    NavbarComponent,
+  declarations: [AppComponent, SidebarComponent, NavbarComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    FormsModule,
+    JobModule,
+    AuthModule,
   ],
-  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
