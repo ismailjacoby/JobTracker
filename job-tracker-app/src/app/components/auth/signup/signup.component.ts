@@ -43,8 +43,4 @@ export class SignupComponent implements OnInit {
       // Implement Sing up
     }
   }
-
-  goToLogin() {
-    this.router.navigate(['/auth/login']);
-  }
 }

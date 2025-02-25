@@ -12,14 +12,14 @@
           class="form-control"
           formControlName="company"
         />
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="
             jobForm.get('company')?.invalid && jobForm.get('company')?.touched
           "
         >
           Company name is required.
-        </div>
+        </small>
       </div>
 
       <!-- Job Title -->
@@ -31,12 +31,12 @@
           class="form-control"
           formControlName="title"
         />
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="jobForm.get('title')?.invalid && jobForm.get('title')?.touched"
         >
           Job Title is required.
-        </div>
+        </small>
       </div>
 
       <!-- Location -->
@@ -48,14 +48,14 @@
           class="form-control"
           formControlName="location"
         />
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="
             jobForm.get('location')?.invalid && jobForm.get('location')?.touched
           "
         >
           Job Title is required.
-        </div>
+        </small>
       </div>
 
       <!-- Status -->
@@ -71,14 +71,14 @@
           <option value="WITHDRAWN">Withdrawn</option>
           <option value="NO_RESPONSE">No Response</option>
         </select>
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="
             jobForm.get('status')?.invalid && jobForm.get('status')?.touched
           "
         >
           Current job application status is required.
-        </div>
+        </small>
       </div>
 
       <!-- Date Applied -->
@@ -90,15 +90,15 @@
           class="form-control"
           formControlName="dateApplied"
         />
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="
             jobForm.get('dateApplied')?.invalid &&
             jobForm.get('dateApplied')?.touched
           "
         >
           Application Date is required.
-        </div>
+        </small>
       </div>
 
       <!-- Link -->
@@ -110,12 +110,12 @@
           class="form-control"
           formControlName="link"
         />
-        <div
-          class="error-msg"
+        <small
+          class="text-danger"
           *ngIf="jobForm.get('link')?.invalid && jobForm.get('link')?.touched"
         >
           Link is required.
-        </div>
+        </small>
       </div>
 
       <!-- Description -->

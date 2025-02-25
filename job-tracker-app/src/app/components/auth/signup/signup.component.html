@@ -3,39 +3,41 @@
 
   <div class="card p-4 shadow-sm mx-auto" style="max-width: 400px">
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <!-- First Name Field -->
-      <div class="mb-3">
-        <label for="firstName" class="form-label">First Name</label>
-        <input
-          type="text"
-          id="firstName"
-          class="form-control"
-          formControlName="firstName"
-          required
-        />
-        <div
-          *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']"
-          class="text-danger"
-        >
-          First name is required.
+      <div class="row mb-3">
+        <!-- First Name Field -->
+        <div class="col">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            formControlName="firstName"
+            required
+          />
+          <small
+            *ngIf="signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']"
+            class="text-danger"
+          >
+            First name is required.
+          </small>
         </div>
-      </div>
 
-      <!-- Last Name Field -->
-      <div class="mb-3">
-        <label for="lastName" class="form-label">Last Name</label>
-        <input
-          type="text"
-          id="lastName"
-          class="form-control"
-          formControlName="lastName"
-          required
-        />
-        <div
-          *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']"
-          class="text-danger"
-        >
-          Last name is required.
+        <!-- Last Name Field -->
+        <div class="col">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            formControlName="lastName"
+            required
+          />
+          <small
+            *ngIf="signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']"
+            class="text-danger"
+          >
+            Last name is required.
+          </small>
         </div>
       </div>
 
@@ -49,18 +51,18 @@
           formControlName="email"
           required
         />
-        <div
+        <small
           *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']"
           class="text-danger"
         >
           Email is required.
-        </div>
-        <div
+        </small>
+        <small
           *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']"
           class="text-danger"
         >
           Please enter a valid email address.
-        </div>
+        </small>
       </div>
 
       <!-- Username Field -->
@@ -73,12 +75,18 @@
           formControlName="username"
           required
         />
-        <div
+        <small
           *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['required']"
           class="text-danger"
         >
           Username is required.
-        </div>
+        </small>
+        <small
+          *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['minlength']"
+          class="text-danger"
+        >
+          Username must be at least 3 characters long.
+        </small>
       </div>
 
       <!-- Password Field -->
@@ -91,12 +99,18 @@
           formControlName="password"
           required
         />
-        <div
+        <small
           *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']"
           class="text-danger"
         >
           Password is required.
-        </div>
+        </small>
+        <small
+          *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['minlength']"
+          class="text-danger"
+        >
+          Password must be at least 8 characters long.
+        </small>
       </div>
 
       <!-- Button -->
@@ -104,11 +118,17 @@
         <button
           type="button"
           class="btn btn-outline-secondary"
-          (click)="goToLogin()"
+          [routerLink]="['/auth/login']"
         >
           Already have an account? Login
         </button>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="signupForm.invalid"
+        >
+          Sign Up
+        </button>
       </div>
     </form>
   </div>

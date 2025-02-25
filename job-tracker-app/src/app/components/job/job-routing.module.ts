@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   { path: 'list', component: JobListComponent },
   { path: 'create', component: JobCreateComponent },
+  { path: 'edit/:id', component: JobCreateComponent },
 ];
 
 @NgModule({

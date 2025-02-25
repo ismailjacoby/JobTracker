@@ -91,7 +91,7 @@
   </div>
 
   <!-- Job List Table -->
-  <div class="table-responsive">
+  <div class="table-responsive" *ngIf="jobs.length; else noJobs">
     <table class="table table-bordered table-hover text-center">
       <thead class="thead-dark">
         <tr>
@@ -111,10 +111,24 @@
           <td>{{ job.status }}</td>
           <td>{{ job.dateApplied | date : "dd.MM.yyyy" }}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary">View</button>
+            <button
+              class="btn btn-sm btn-outline-primary mx-1"
+              [routerLink]="['/edit', job.id]"
+            >
+              Edit
+            </button>
+            <button class="btn btn-sm btn-primary mx-1">View</button>
+            <button class="btn btn-sm btn-danger mx-1">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
+  <ng-template #noJobs>
+    <p class="text-danger text-center">
+      No applications sent yet! <br />
+      Click the add job button to add your first job application!
+    </p>
+  </ng-template>
 </div>
