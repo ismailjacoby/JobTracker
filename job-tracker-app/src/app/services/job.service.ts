@@ -25,6 +25,12 @@ export class JobService {
     return this.jobs;
   }
 
+  updateJob(updatedJob: Job): void {
+    let index = this.jobs.findIndex((res) => res.id === updatedJob.id);
+    this.jobs[index] = updatedJob;
+    localStorage.setItem('reservations', JSON.stringify(this.jobs));
+  }
+
   searchJobs(searchTerm: string): Job[] {
     return this.jobs.filter(
       (job) =>
