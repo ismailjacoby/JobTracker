@@ -3,10 +3,12 @@ package com.ismailjacoby.jobtrackerapi.service.implementation;
 import com.ismailjacoby.jobtrackerapi.dto.JobDTO;
 import com.ismailjacoby.jobtrackerapi.dto.JobShortDTO;
 import com.ismailjacoby.jobtrackerapi.entity.JobEntity;
+import com.ismailjacoby.jobtrackerapi.entity.UserEntity;
 import com.ismailjacoby.jobtrackerapi.enums.JobStatus;
 import com.ismailjacoby.jobtrackerapi.exception.NotFoundException;
 import com.ismailjacoby.jobtrackerapi.form.JobForm;
 import com.ismailjacoby.jobtrackerapi.repository.JobRepository;
+import com.ismailjacoby.jobtrackerapi.repository.UserRepository;
 import com.ismailjacoby.jobtrackerapi.service.declaration.JobService;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +19,21 @@ import java.util.Optional;
 public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
+    private final UserRepository userRepository;
 
-    public JobServiceImpl(JobRepository jobRepository) {
+    public JobServiceImpl(JobRepository jobRepository, UserRepository userRepository) {
         this.jobRepository = jobRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public void addJob(JobForm form) {
+    public void addJob(JobForm form, String username) {
         if(form == null) {
             throw new IllegalArgumentException("Form cannot be null");
         }
+
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         JobEntity job = new JobEntity();
         job.setCompany(form.company());
@@ -38,9 +45,13 @@ public class JobServiceImpl implements JobService {
         job.setDescription(form.description());
         job.setSalary(form.salary());
         job.setNotes(form.notes());
+        job.setUser(user);
         jobRepository.save(job);
     }
-
+    /*
+    * TODO: Get One Job
+    * Has to check for the logged in user
+    * */
     @Override
     public Optional<JobEntity> getJobById(Long id) {
         Optional<JobEntity> job = jobRepository.findById(id);
@@ -53,18 +64,19 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<JobEntity> getAllJobs() {
-        return jobRepository.findAll();
+    public List<JobEntity> getAllJobs(String username) {
+        return jobRepository.findByUserUsername(username);
     }
 
     @Override
-    public void updateJob(Long id, JobForm form) {
+    public void updateJob(Long id, JobForm form, String username) {
         if(form == null) {
             throw new IllegalArgumentException("Form cannot be null");
         }
 
         JobEntity job = jobRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException("Job not found."));
+                .filter(j -> j.getUser().getUsername().equals(username))
+                .orElseThrow(()-> new NotFoundException("Job not found or unauthorized"));
 
         job.setCompany(form.company());
         job.setTitle(form.title());
@@ -79,10 +91,11 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void deleteJob(Long id) {
-        if (!jobRepository.existsById(id)) {
-            throw new NotFoundException("Job not found.");
-        }
+    public void deleteJob(Long id, String username) {
+        JobEntity job = jobRepository.findById(id)
+                .filter(j -> j.getUser().getUsername().equals(username))
+                .orElseThrow(()-> new NotFoundException("Job not found or unauthorized"));
+
         jobRepository.deleteById(id);
     }
 }

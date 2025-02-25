@@ -37,6 +37,10 @@ public class JobEntity {
 
     private String notes;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
     public Long getId() {
         return id;
     }
@@ -115,5 +119,16 @@ public class JobEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+        if (!user.getJobApplications().contains(this)) {
+            user.getJobApplications().add(this);
+        }
     }
 }

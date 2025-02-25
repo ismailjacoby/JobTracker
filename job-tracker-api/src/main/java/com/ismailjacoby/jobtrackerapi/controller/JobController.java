@@ -8,6 +8,8 @@ import com.ismailjacoby.jobtrackerapi.form.JobForm;
 import com.ismailjacoby.jobtrackerapi.service.declaration.JobService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,12 @@ public class JobController {
     }
 
     @PostMapping("/add")
-    public void addJob(@RequestBody @Valid JobForm form){
-        jobService.addJob(form);
+    public void addJob(@RequestBody @Valid JobForm form, @AuthenticationPrincipal UserDetails user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User must be authenticated to add a job");
+        }
+
+        jobService.addJob(form, user.getUsername());
     }
 
     @GetMapping("/{id}")
@@ -35,8 +41,12 @@ public class JobController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<JobShortDTO>> getAllJobs(){
-        return ResponseEntity.ok(jobService.getAllJobs()
+    public ResponseEntity<List<JobShortDTO>> getAllJobs(@AuthenticationPrincipal UserDetails user){
+        if (user == null) {
+            throw new IllegalArgumentException("User must be authenticated to add a job");
+        }
+
+        return ResponseEntity.ok(jobService.getAllJobs(user.getUsername())
                 .stream()
                 .map(JobShortDTO::toDto)
                 .toList()
@@ -44,13 +54,13 @@ public class JobController {
     }
 
     @PutMapping("/{id}")
-    public void updateJob(@PathVariable Long id, @RequestBody @Valid JobForm form){
-        jobService.updateJob(id, form);
+    public void updateJob(@PathVariable Long id, @RequestBody @Valid JobForm form,@AuthenticationPrincipal UserDetails user){
+        jobService.updateJob(id, form, user.getUsername());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteJob(@PathVariable Long id){
-        jobService.deleteJob(id);
+    public ResponseEntity<Void> deleteJob(@PathVariable Long id, @AuthenticationPrincipal UserDetails user){
+        jobService.deleteJob(id, user.getUsername());
         return ResponseEntity.noContent().build();
     }
 }

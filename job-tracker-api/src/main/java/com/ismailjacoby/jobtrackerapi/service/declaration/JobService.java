@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JobService {
-    void addJob(JobForm form);
+    void addJob(JobForm form, String username);
     Optional<JobEntity> getJobById(Long id);
-    List<JobEntity> getAllJobs();
-    void updateJob(Long id, JobForm form);
-    void deleteJob(Long id);
+    List<JobEntity> getAllJobs(String username);
+    void updateJob(Long id, JobForm form, String username);
+    void deleteJob(Long id, String username);
 }

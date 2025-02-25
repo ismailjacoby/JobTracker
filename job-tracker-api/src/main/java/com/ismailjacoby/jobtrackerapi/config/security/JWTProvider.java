@@ -76,7 +76,7 @@ public class JWTProvider {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         return new UsernamePasswordAuthenticationToken(
-                userDetails.getUsername(),null,userDetails.getAuthorities()
+                userDetails,null,userDetails.getAuthorities()
         );
     }
 

@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface JobRepository extends JpaRepository<JobEntity, Long> {
 
+    List<JobEntity> findByUserUsername(String username);
 }

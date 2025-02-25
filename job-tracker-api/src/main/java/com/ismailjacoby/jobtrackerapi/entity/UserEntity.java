@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobEntity> jobApplications = new ArrayList<>();
 
     // Constructor
 
@@ -110,6 +114,13 @@ public class UserEntity implements UserDetails {
         isActive = active;
     }
 
+    public List<JobEntity> getJobApplications() {
+        return jobApplications;
+    }
+
+    public void setJobApplications(List<JobEntity> jobApplications) {
+        this.jobApplications = jobApplications;
+    }
 
     // User Details implementation
 
