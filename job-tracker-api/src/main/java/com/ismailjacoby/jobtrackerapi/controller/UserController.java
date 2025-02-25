@@ -26,6 +26,6 @@ public class UserController {
 
     @PostMapping("/signup")
     public void signup(@RequestBody @Valid SignupForm form) {
-        userService.register(form);
+        userService.signup(form);
     }
 }
