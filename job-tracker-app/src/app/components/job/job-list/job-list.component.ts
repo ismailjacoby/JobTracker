@@ -29,7 +29,9 @@ export class JobListComponent implements OnInit {
   constructor(private jobService: JobService) {}
 
   ngOnInit(): void {
-    this.jobs = this.jobService.getJobs();
+    this.jobService.getJobs().subscribe((jobs) => {
+      this.jobs = jobs;
+    });
     this.updateStatusCounts();
   }
 
