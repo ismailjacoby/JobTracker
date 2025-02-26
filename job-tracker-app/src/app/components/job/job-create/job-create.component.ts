@@ -31,18 +31,40 @@ export class JobCreateComponent implements OnInit {
       salary: [''],
       notes: [''],
     });
+
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      let job = this.jobService.getJob(+id).subscribe((job) => {
+        if (job) {
+          this.jobForm.patchValue(job);
+        }
+      });
+    }
   }
 
   onSubmit() {
     if (this.jobForm.valid) {
-      this.jobService.addJob(this.jobForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/job/list']);
-        },
-        error: (err) => {
-          console.log('Error adding job:', err);
-        },
-      });
+      let id = this.activatedRoute.snapshot.paramMap.get('id');
+
+      if (id) {
+        this.jobService.updateJob(+id, this.jobForm.value).subscribe({
+          next: () => {
+            this.router.navigate(['/job/list']);
+          },
+          error: (err) => {
+            console.log('Error updating job:', err);
+          },
+        });
+      } else {
+        this.jobService.addJob(this.jobForm.value).subscribe({
+          next: () => {
+            this.router.navigate(['/job/list']);
+          },
+          error: (err) => {
+            console.log('Error adding job:', err);
+          },
+        });
+      }
     }
   }
 
