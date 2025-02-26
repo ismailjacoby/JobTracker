@@ -1,0 +1,39 @@
+<div *ngIf="job" class="container mt-4">
+  <h2 class="mb-3 text-center">Job Details</h2>
+
+  <div class="card">
+    <div class="card-body">
+      <p><strong>Company:</strong> {{ job.company }}</p>
+      <p><strong>Job Title:</strong> {{ job.title }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p><strong>Status:</strong> {{ job.status }}</p>
+      <p>
+        <strong>Date Applied:</strong>
+        {{ job.dateApplied | date : "dd MMMM yyyy" }}
+      </p>
+      <p>
+        <strong>Link: </strong>
+        <a href="{{ job.link }}" target="_blank" class="text-primary">{{
+          job.link
+        }}</a>
+      </p>
+      <p><strong>Salary:</strong> {{ job.salary | currency }}</p>
+
+      <p><strong>Description:</strong></p>
+      <p>{{ job.description }}</p>
+      <p><strong>Notes:</strong></p>
+      <p>{{ job.notes }}</p>
+      <div class="mt-4">
+        <button class="btn btn-outline-primary" [routerLink]="['/job/list']">
+          Back
+        </button>
+        <button class="btn btn-primary mx-3" [routerLink]="['/edit/', job.id]">
+          Update
+        </button>
+        <button class="btn btn-danger" (click)="deleteJob(job.id)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,6 +25,8 @@ export class JobListComponent implements OnInit {
     [JobStatus.NO_RESPONSE]: 0,
   };
 
+  currentJobId: number | null = null;
+  currentJob: Job | null = null;
   JobStatus = JobStatus;
 
   constructor(
@@ -47,6 +49,12 @@ export class JobListComponent implements OnInit {
     });
   }
 
+  getJobDetails(id: number) {
+    this.jobService.getJob(id).subscribe((job) => {
+      this.currentJob = job;
+    });
+  }
+
   deleteJob(id: number) {
     console.log(id);
     this.jobService.deleteJob(id).subscribe({
@@ -57,6 +65,16 @@ export class JobListComponent implements OnInit {
         console.error('Error deleting job:', err);
       },
     });
+  }
+
+  toggleDetails(jobId: number): void {
+    // If the currently selected job is the same as the clicked job, hide the details
+    if (this.currentJob && this.currentJob.id === jobId) {
+      this.currentJob = null; // Hide details
+    } else {
+      // Find the job with the matching ID
+      this.currentJob = this.jobs.find((job) => job.id === jobId) || null; // Show details
+    }
   }
 
   updateStatusCounts() {
