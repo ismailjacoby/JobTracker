@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Job } from '../../../models/job';
 import { JobStatus } from '../../../models/job-status';
 import { JobService } from '../../../services/job.service';
+import { AccountService } from '../../../services/account.service';
 
 @Component({
   selector: 'app-job-list',
@@ -26,13 +27,20 @@ export class JobListComponent implements OnInit {
 
   JobStatus = JobStatus;
 
-  constructor(private jobService: JobService) {}
+  constructor(
+    private jobService: JobService,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
-    this.jobService.getJobs().subscribe((jobs) => {
-      this.jobs = jobs;
-    });
-    this.updateStatusCounts();
+    const username = this.accountService.getUsername();
+
+    if (username) {
+      this.jobService.getJobs().subscribe((jobs) => {
+        this.jobs = jobs;
+      });
+      this.updateStatusCounts();
+    }
   }
 
   searchJobs() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Job } from '../models/job';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,29 +8,44 @@ import { Observable } from 'rxjs';
 })
 export class JobService {
   private jobs: Job[] = [];
-  private apiUrl = 'http://localhost:8000/job';
+  private apiUrl = 'http://localhost:8080/job';
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `${localStorage.getItem('token')}`,
+  });
 
   constructor(private http: HttpClient) {}
 
-  addJob(job: Job) {
-    this.jobs.push(job);
+  // Add Job (sends authenticated request)
+  addJob(job: Job): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add`, job, { headers: this.headers });
   }
 
-  getJob(id: number): Job | undefined {
-    return this.jobs.find((job) => job.id === id);
+  // Get a single job by ID
+  getJob(id: number): Observable<any> {
+    return this.http.get<Job>(`${this.apiUrl}/${id}`, {
+      headers: this.headers,
+    });
   }
 
-  // Get all Jobs
+  // Get all jobs for the authenticated user
   getJobs(): Observable<Job[]> {
-    return this.http.get<Job[]>(this.apiUrl + '/all');
+    return this.http.get<Job[]>(`${this.apiUrl}/all`, {
+      headers: this.headers,
+    });
   }
 
-  updateJob(updatedJob: Job): void {
-    let index = this.jobs.findIndex((res) => res.id === updatedJob.id);
-    this.jobs[index] = updatedJob;
+  // Update Job
+  updateJob(id: number, updatedJob: Job): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, updatedJob, {
+      headers: this.headers,
+    });
   }
 
-  deleteJob() {}
+  // Delete Job
+  deleteJob(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers: this.headers });
+  }
 
   searchJobs(searchTerm: string): Job[] {
     return this.jobs.filter(
