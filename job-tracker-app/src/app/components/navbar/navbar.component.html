@@ -23,7 +23,7 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profile"
+          <a class="nav-link" routerLink="/profile" *ngIf="isLoggedIn()"
             >Welcome {{ username | titlecase }}</a
           >
         </li>
