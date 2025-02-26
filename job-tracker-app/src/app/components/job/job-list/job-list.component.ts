@@ -36,20 +36,32 @@ export class JobListComponent implements OnInit {
     const username = this.accountService.getUsername();
 
     if (username) {
-      this.jobService.getJobs().subscribe((jobs) => {
-        this.jobs = jobs;
-      });
-      this.updateStatusCounts();
+      this.getJobs();
     }
   }
 
-  searchJobs() {
-    this.jobs = this.jobService.searchJobs(this.searchTerm);
+  getJobs() {
+    this.jobService.getJobs().subscribe((jobs) => {
+      this.jobs = jobs;
+      this.updateStatusCounts();
+    });
+  }
+
+  deleteJob(id: number) {
+    console.log(id);
+    this.jobService.deleteJob(id).subscribe({
+      next: () => {
+        this.getJobs();
+      },
+      error: (err) => {
+        console.error('Error deleting job:', err);
+      },
+    });
   }
 
   updateStatusCounts() {
     this.totalApplications = this.jobs.length;
-    // Reset status counts
+
     this.statusCounts = {
       [JobStatus.APPLIED]: 0,
       [JobStatus.INTERVIEW_SCHEDULED]: 0,
@@ -62,10 +74,14 @@ export class JobListComponent implements OnInit {
     };
 
     this.jobs.forEach((job) => {
-      const status = job.status;
-      if (this.statusCounts[status] !== undefined) {
-        this.statusCounts[status]++;
+      // Check if the job status is a valid enum value
+      if (Object.values(JobStatus).includes(job.status as JobStatus)) {
+        this.statusCounts[job.status as JobStatus]++;
+      } else {
+        console.warn(`Invalid status: ${job.status}`);
       }
     });
+
+    console.log('Updated status counts:', this.statusCounts);
   }
 }

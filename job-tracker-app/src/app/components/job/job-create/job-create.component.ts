@@ -35,9 +35,14 @@ export class JobCreateComponent implements OnInit {
 
   onSubmit() {
     if (this.jobForm.valid) {
-      let job = this.jobForm.value;
-      this.jobService.addJob(job);
-      this.router.navigate(['/job/list']);
+      this.jobService.addJob(this.jobForm.value).subscribe({
+        next: () => {
+          this.router.navigate(['/job/list']);
+        },
+        error: (err) => {
+          console.log('Error adding job:', err);
+        },
+      });
     }
   }
 
