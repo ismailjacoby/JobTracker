@@ -4,35 +4,35 @@ import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { Auth } from '../models/auth';
 import { Router } from '@angular/router';
 import { UserRoles } from '../models/user-roles';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8082/account';
-  public userRole!: string;
+  private apiUrl = `${environment.baseUrl}/account`;
+  public userRole: UserRoles | null = null;
 
   connectedUser = new BehaviorSubject<Auth | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {
     const token = localStorage.getItem('token');
     if (token) {
-      const role = localStorage.getItem('role');
-      if (role) {
-        this.userRole = role;
-      }
-      let roleConnected: UserRoles;
-      if (role === 'ADMIN') {
-        roleConnected = UserRoles.ADMIN;
-      } else {
-        roleConnected = UserRoles.USER;
-      }
-      this.connectedUser.next({
-        token: token,
-        role: roleConnected,
-        username: localStorage.getItem('username') || '',
-      });
+      this.setUserRole(localStorage.getItem('role'));
+      this.connectedUser.next(this.getConnectedUser(token));
     }
+  }
+
+  private setUserRole(role: string | null) {
+    this.userRole = role === 'ADMIN' ? UserRoles.ADMIN : UserRoles.USER;
+  }
+
+  private getConnectedUser(token: string): Auth {
+    return {
+      token: token,
+      role: this.userRole || UserRoles.USER,
+      username: localStorage.getItem('username') || '',
+    };
   }
 
   login(username: string, password: string): Observable<any> {
@@ -42,9 +42,9 @@ export class AccountService {
         tap((value) => {
           localStorage.setItem('token', value.token);
           localStorage.setItem('role', value.role.toString());
-          this.userRole = value.role.toString();
           localStorage.setItem('username', value.username);
           this.connectedUser.next(value);
+          this.setUserRole(value.role.toString());
         }),
         catchError((error) => {
           console.error('Login failed:', error);
@@ -57,7 +57,7 @@ export class AccountService {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
-    this.userRole = '';
+    this.userRole = null;
     this.connectedUser.next(null);
     this.router.navigate(['/auth/login']);
   }
@@ -78,7 +78,7 @@ export class AccountService {
     return localStorage.getItem('role') === 'USER';
   }
 
-  getUserRole(): string {
+  getUserRole(): UserRoles | null {
     return this.userRole;
   }
 }

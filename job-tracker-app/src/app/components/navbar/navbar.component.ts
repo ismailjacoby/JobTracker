@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   username: string = '';
+
   isLoggedIn: boolean = false;
 
   constructor(private accountService: AccountService, private router: Router) {}

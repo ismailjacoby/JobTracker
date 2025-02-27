@@ -9,7 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { JobModule } from './components/job/job.module';
 import { AuthModule } from './components/auth/auth.module';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, NavbarComponent],
@@ -21,7 +27,7 @@ import { provideHttpClient } from '@angular/common/http';
     JobModule,
     AuthModule,
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
