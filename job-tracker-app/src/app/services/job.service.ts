@@ -13,12 +13,12 @@ export class JobService {
   constructor(private http: HttpClient) {}
 
   // Add Job (sends authenticated request)
-  addJob(job: Job): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, job);
+  addJob(job: Job): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/add`, job);
   }
 
   // Get a single job by ID
-  getJob(id: number): Observable<any> {
+  getJob(id: number): Observable<Job> {
     return this.http.get<Job>(`${this.apiUrl}/${id}`);
   }
 
@@ -28,12 +28,12 @@ export class JobService {
   }
 
   // Update Job
-  updateJob(id: number, updatedJob: Job): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, updatedJob);
+  updateJob(id: number, updatedJob: Job): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, updatedJob);
   }
 
   // Delete Job
-  deleteJob(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteJob(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

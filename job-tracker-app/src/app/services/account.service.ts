@@ -35,7 +35,7 @@ export class AccountService {
     };
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<Auth> {
     return this.http
       .post<Auth>(this.apiUrl + '/login', { username, password })
       .pipe(
