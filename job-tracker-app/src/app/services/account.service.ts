@@ -9,7 +9,7 @@ import { UserRoles } from '../models/user-roles';
   providedIn: 'root',
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8080/account';
+  private apiUrl = 'http://localhost:8082/account';
   public userRole!: string;
 
   connectedUser = new BehaviorSubject<Auth | null>(null);

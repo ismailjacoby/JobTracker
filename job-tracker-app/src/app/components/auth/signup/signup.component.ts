@@ -11,6 +11,7 @@ import { SignupForm } from '../../../models/signup-form';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup = new FormGroup({});
+  errorMessage: string = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router) {}
 

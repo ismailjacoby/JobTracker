@@ -143,13 +143,18 @@
 
       <!-- Notes -->
       <div class="mb-3">
-        <label for="notes" class="form-label">Input:</label>
+        <label for="notes" class="form-label">Notes:</label>
         <input
           type="text"
           id="notes"
           class="form-control"
           formControlName="notes"
         />
+      </div>
+
+      <!-- Error Message -->
+      <div class="text-center my-2">
+        <small class="text-danger">{{ errorMessage }}</small>
       </div>
 
       <!-- Buttons -->

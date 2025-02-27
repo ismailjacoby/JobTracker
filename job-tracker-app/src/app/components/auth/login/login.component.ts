@@ -11,6 +11,7 @@ import { AccountService } from '../../../services/account.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
+  errorMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/job/list']);
           },
           (error) => {
-            console.log(error);
+            this.errorMessage = error.error.message;
           }
         );
     }

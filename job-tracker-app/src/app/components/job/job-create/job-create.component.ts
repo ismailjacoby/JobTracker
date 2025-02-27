@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class JobCreateComponent implements OnInit {
   jobForm: FormGroup = new FormGroup({});
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -51,8 +52,8 @@ export class JobCreateComponent implements OnInit {
           next: () => {
             this.router.navigate(['/job/list']);
           },
-          error: (err) => {
-            console.log('Error updating job:', err);
+          error: (error) => {
+            this.errorMessage = error.error.message;
           },
         });
       } else {
@@ -60,8 +61,9 @@ export class JobCreateComponent implements OnInit {
           next: () => {
             this.router.navigate(['/job/list']);
           },
-          error: (err) => {
-            console.log('Error adding job:', err);
+          error: (error) => {
+            console.log(error.error);
+            this.errorMessage = error.error.message;
           },
         });
       }
