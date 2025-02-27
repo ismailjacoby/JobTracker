@@ -23,7 +23,7 @@
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profile" *ngIf="isLoggedIn()"
+          <a class="nav-link" routerLink="/profile" *ngIf="isLoggedIn"
             >Welcome {{ username | titlecase }}</a
           >
         </li>
@@ -31,7 +31,7 @@
           <button
             class="btn btn-outline-dark mx-1"
             [routerLink]="['/auth/login']"
-            *ngIf="!isLoggedIn()"
+            *ngIf="!isLoggedIn"
           >
             Login
           </button>
@@ -39,7 +39,7 @@
         <li class="nav-item">
           <button
             class="btn btn-outline-dark mx-1"
-            *ngIf="isLoggedIn()"
+            *ngIf="isLoggedIn"
             (click)="logout()"
           >
             Logout

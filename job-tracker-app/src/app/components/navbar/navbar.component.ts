@@ -10,15 +10,18 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   username: string = '';
+  isLoggedIn: boolean = false;
+
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
+    this.accountService.connectedUser.subscribe((user) => {
+      this.isLoggedIn = !!user;
+      this.username = user ? user.username : '';
+    });
+
     const storedUsername = localStorage.getItem('username');
     this.username = storedUsername ? storedUsername : '';
-  }
-
-  isLoggedIn(): boolean {
-    return this.accountService.isLoggedIn();
   }
 
   logout() {
