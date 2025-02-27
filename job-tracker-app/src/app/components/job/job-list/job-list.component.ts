@@ -13,6 +13,8 @@ import { AccountService } from '../../../services/account.service';
 export class JobListComponent implements OnInit {
   jobs: Job[] = [];
   searchTerm: string = '';
+  sortField: string = 'dateApplied';
+  sortOrder: 'asc' | 'desc' = 'desc';
   totalApplications: number = 0;
   statusCounts: Record<JobStatus, number> = {
     [JobStatus.APPLIED]: 0,
@@ -67,14 +69,41 @@ export class JobListComponent implements OnInit {
     });
   }
 
-  toggleDetails(jobId: number): void {
-    // If the currently selected job is the same as the clicked job, hide the details
-    if (this.currentJob && this.currentJob.id === jobId) {
-      this.currentJob = null; // Hide details
+  sort(column: string) {
+    if (this.sortField === column) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
-      // Find the job with the matching ID
-      this.currentJob = this.jobs.find((job) => job.id === jobId) || null; // Show details
+      this.sortField = column;
+      this.sortOrder = column === 'dateApplied' ? 'desc' : 'asc';
     }
+
+    this.jobs.sort((a, b) => {
+      const aValue =
+        column === 'dateApplied'
+          ? new Date(a[column]).getTime()
+          : a[column].toString().toLowerCase();
+      const bValue =
+        column === 'dateApplied'
+          ? new Date(b[column]).getTime()
+          : b[column].toString().toLowerCase();
+
+      if (aValue < bValue) {
+        return this.sortOrder === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return this.sortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  getSortIcon(column: string) {
+    if (this.sortField === column) {
+      return this.sortOrder === 'asc'
+        ? 'icons/arrow_up.png'
+        : 'icons/arrow_down.png';
+    }
+    return '';
   }
 
   updateStatusCounts() {

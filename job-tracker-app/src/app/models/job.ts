@@ -11,4 +11,5 @@ export interface Job {
   description: string;
   salary: number;
   notes: string;
+  [key: string]: any;
 }
