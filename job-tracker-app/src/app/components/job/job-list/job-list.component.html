@@ -103,10 +103,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let job of jobs">
-          <td>{{ job.company }}</td>
-          <td>{{ job.title }}</td>
-          <td>{{ job.location }}</td>
-          <td>{{ job.status }}</td>
+          <td>{{ job.company | titlecase }}</td>
+          <td>{{ job.title | titlecase }}</td>
+          <td>{{ job.location | titlecase }}</td>
+          <td>{{ job.status | titlecase }}</td>
           <td>{{ job.dateApplied | date : "dd.MM.yyyy" }}</td>
           <td>
             <button
