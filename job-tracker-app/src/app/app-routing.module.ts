@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { isLoggedInGuard } from './guards/is-logged-in.guard';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'job', pathMatch: 'full' },
   {
     path: 'job',
     loadChildren: () =>

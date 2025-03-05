@@ -7,8 +7,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { JobModule } from './components/job/job.module';
-import { AuthModule } from './components/auth/auth.module';
 import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
@@ -19,14 +17,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, NavbarComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    FormsModule,
-    JobModule,
-    AuthModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, FontAwesomeModule, FormsModule],
   providers: [provideHttpClient(withInterceptors([authInterceptor]))],
   bootstrap: [AppComponent],
 })
