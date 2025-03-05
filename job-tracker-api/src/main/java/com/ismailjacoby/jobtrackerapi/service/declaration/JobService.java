@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface JobService {
     void addJob(JobForm form, String username);
-    Optional<JobEntity> getJobById(Long id);
+    JobEntity getJobById(Long id, String username);
     List<JobEntity> getAllJobs(String username);
     void updateJob(Long id, JobForm form, String username);
     void deleteJob(Long id, String username);

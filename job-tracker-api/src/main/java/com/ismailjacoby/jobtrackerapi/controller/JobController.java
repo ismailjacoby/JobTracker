@@ -34,10 +34,9 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JobDTO> getJobById(@PathVariable Long id){
-        JobEntity jobEntity = jobService.getJobById(id)
-                .orElseThrow(() -> new NotFoundException("Job not Found"));
-        return ResponseEntity.ok(JobDTO.toDto(jobEntity));
+    public ResponseEntity<JobDTO> getJobById(@PathVariable Long id, @AuthenticationPrincipal UserDetails user) {
+        JobEntity job = jobService.getJobById(id, user.getUsername());
+        return ResponseEntity.ok(JobDTO.toDto(job));
     }
 
     @GetMapping("/all")

@@ -6,6 +6,7 @@ import com.ismailjacoby.jobtrackerapi.entity.JobEntity;
 import com.ismailjacoby.jobtrackerapi.entity.UserEntity;
 import com.ismailjacoby.jobtrackerapi.enums.JobStatus;
 import com.ismailjacoby.jobtrackerapi.exception.NotFoundException;
+import com.ismailjacoby.jobtrackerapi.exception.UnauthorizedException;
 import com.ismailjacoby.jobtrackerapi.form.JobForm;
 import com.ismailjacoby.jobtrackerapi.repository.JobRepository;
 import com.ismailjacoby.jobtrackerapi.repository.UserRepository;
@@ -48,19 +49,17 @@ public class JobServiceImpl implements JobService {
         job.setUser(user);
         jobRepository.save(job);
     }
-    /*
-    * TODO: Get One Job
-    * Has to check for the logged in user
-    * */
-    @Override
-    public Optional<JobEntity> getJobById(Long id) {
-        Optional<JobEntity> job = jobRepository.findById(id);
 
-        if(job.isPresent()) {
-            return job;
-        } else {
-            throw new NotFoundException("Job not found");
-        }
+    @Override
+    public JobEntity getJobById(Long id, String username) {
+        return jobRepository.findById(id)
+                .map(job->{
+                    if(!job.getUser().getUsername().equals(username)) {
+                        throw new UnauthorizedException("You are not authorized to access this job.");
+                    }
+                    return job;
+                })
+                .orElseThrow(()-> new NotFoundException("Job not found."));
     }
 
     @Override
