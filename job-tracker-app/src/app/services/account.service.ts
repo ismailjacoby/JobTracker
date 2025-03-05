@@ -5,6 +5,7 @@ import { Auth } from '../models/auth';
 import { Router } from '@angular/router';
 import { UserRoles } from '../models/user-roles';
 import { environment } from '../../environments/environment';
+import { SignupForm } from '../models/signup-form';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,10 @@ export class AccountService {
           return throwError(() => error);
         })
       );
+  }
+
+  signup(form: SignupForm): Observable<void> {
+    return this.http.post<void>(this.apiUrl + '/signup', form);
   }
 
   logout() {
