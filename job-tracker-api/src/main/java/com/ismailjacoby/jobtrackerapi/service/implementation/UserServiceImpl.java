@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         // Attempt to authenticate the user
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(form.username(), form.password())
+                    new UsernamePasswordAuthenticationToken(form.username().toLowerCase(), form.password())
             );
         } catch (BadCredentialsException e) {
             throw new IllegalArgumentException("Invalid username or password");
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(form.firstName());
         user.setLastName(form.lastName());
         user.setEmail(form.email());
-        user.setUsername(form.username());
+        user.setUsername(form.username().toLowerCase());
         user.setPassword(passwordEncoder.encode(form.password()));
         user.setActive(true);
         user.setRole(UserRole.USER);
