@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class JobCreateComponent implements OnInit {
   jobForm: FormGroup = new FormGroup({});
   errorMessage: string = '';
+  typeOfForm: string = 'Add';
 
   constructor(
     private router: Router,
@@ -35,11 +36,14 @@ export class JobCreateComponent implements OnInit {
 
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
+      this.typeOfForm = 'Update';
       let job = this.jobService.getJob(+id).subscribe((job) => {
         if (job) {
           this.jobForm.patchValue(job);
         }
       });
+    } else {
+      this.typeOfForm = 'Add New';
     }
   }
 

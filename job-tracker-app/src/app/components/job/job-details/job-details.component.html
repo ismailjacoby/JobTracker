@@ -27,7 +27,10 @@
         <button class="btn btn-outline-primary" [routerLink]="['/job/list']">
           Back
         </button>
-        <button class="btn btn-primary mx-3" [routerLink]="['/edit/', job.id]">
+        <button
+          class="btn btn-primary mx-3"
+          [routerLink]="['/job/edit/', job.id]"
+        >
           Update
         </button>
         <button class="btn btn-danger" (click)="deleteJob(job.id)">
