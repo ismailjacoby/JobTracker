@@ -27,6 +27,14 @@ public class JobServiceImpl implements JobService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Adds a new job application for the authenticated user.
+     *
+     * @param form The job application details.
+     * @param username The username of the authenticated user.
+     * @throws NotFoundException if the user is not found.
+     * @throws IllegalArgumentException if the form is null.
+     */
     @Override
     public void addJob(JobForm form, String username) {
         if(form == null) {
@@ -50,6 +58,16 @@ public class JobServiceImpl implements JobService {
         jobRepository.save(job);
     }
 
+
+    /**
+     * Retrieves a job by its ID, ensuring the user is authorized.
+     *
+     * @param id The job ID.
+     * @param username The username of the authenticated user.
+     * @return The job entity.
+     * @throws NotFoundException if the job does not exist.
+     * @throws UnauthorizedException if the user does not own the job.
+     */
     @Override
     public JobEntity getJobById(Long id, String username) {
         return jobRepository.findById(id)
@@ -62,11 +80,26 @@ public class JobServiceImpl implements JobService {
                 .orElseThrow(()-> new NotFoundException("Job not found."));
     }
 
+    /**
+     * Retrieves all job applications associated with the authenticated user.
+     *
+     * @param username The username of the authenticated user.
+     * @return A list of job entities.
+     */
     @Override
     public List<JobEntity> getAllJobs(String username) {
         return jobRepository.findByUserUsername(username);
     }
 
+    /**
+     * Updates an existing job application, ensuring the user is authorized.
+     *
+     * @param id The job ID.
+     * @param form The updated job details.
+     * @param username The username of the authenticated user.
+     * @throws NotFoundException if the job does not exist or the user is not authorized.
+     * @throws IllegalArgumentException if the form is null.
+     */
     @Override
     public void updateJob(Long id, JobForm form, String username) {
         if(form == null) {
@@ -89,6 +122,13 @@ public class JobServiceImpl implements JobService {
         jobRepository.save(job);
     }
 
+    /**
+     * Deletes a job application, ensuring the user is authorized.
+     *
+     * @param id The job ID.
+     * @param username The username of the authenticated user.
+     * @throws NotFoundException if the job does not exist or the user is not authorized.
+     */
     @Override
     public void deleteJob(Long id, String username) {
         JobEntity job = jobRepository.findById(id)
