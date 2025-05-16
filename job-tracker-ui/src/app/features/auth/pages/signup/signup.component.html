@@ -91,6 +91,9 @@
 
       <button class="w-full mb-3 py-3 btn bg-black text-white hover:cursor-pointer hover:bg-neutral-800" [disabled]="signupForm.invalid">Signup</button>
 
+      @if(successMessage){
+        <p class="text-sm text-green-600 text-center">{{ successMessage }}</p>
+      }
       @if(errorMessage){
         <p class="text-sm text-red-600 text-center">{{ errorMessage }}</p>
       }
