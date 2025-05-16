@@ -7,3 +7,8 @@
   border: none;
   transition: 0.2s ease;
 }
+
+.btn:disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
+}

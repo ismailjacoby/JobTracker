@@ -1,0 +1,104 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-900">Signup</h1>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-5">
+      <!-- Firstname -->
+      <div class="flex flex-col">
+        <label for="firstName" class="mb-1 text-gray-700 font-semibold">First Name</label>
+        <input type="text" id="firstName" placeholder="Enter your first name:" formControlName="firstName"
+        class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition placeholder:text-neutral-400">
+
+        @if(signupForm.get('firstName')?.touched && signupForm.get('firstName')?.errors?.['required']){
+          <p class="text-sm text-red-600 mt-1">First name is required.</p>
+        }
+      </div>
+
+      <!-- Lastname -->
+      <div class="flex flex-col">
+        <label for="lastName" class="mb-1 text-gray-700 font-semibold">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          placeholder="Enter your last name"
+          formControlName="lastName"
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition placeholder:text-neutral-400"
+        >
+
+        @if(signupForm.get('lastName')?.touched && signupForm.get('lastName')?.errors?.['required']){
+          <p class="text-sm text-red-600 mt-1">Last name is required.</p>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="flex flex-col">
+        <label for="email" class="mb-1 text-gray-700 font-semibold">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          formControlName="email"
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition placeholder:text-neutral-400"
+        >
+
+        @if(signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']){
+          <p class="text-sm text-red-600 mt-1">Email is required.</p>
+        }
+
+        @if(signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']){
+          <p class="text-sm text-red-600 mt-1">Invalid email format.</p>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col">
+        <label for="password" class="mb-1 text-gray-700 font-semibold">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          formControlName="password"
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition placeholder:text-neutral-400"
+        >
+
+        @if(signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']){
+          <p class="text-sm text-red-600 mt-1">Password is required.</p>
+        }
+        @if(signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['minlength']){
+          <p class="text-sm text-red-600 mt-1">Password must be at least 8 characters long.</p>
+        }
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="flex flex-col">
+        <label for="confirmPassword" class="mb-1 text-gray-700 font-semibold">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Confirm your password"
+          formControlName="confirmPassword"
+          class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition placeholder:text-neutral-400"
+        >
+
+        @if(signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.['required']){
+          <p class="text-sm text-red-600 mt-1">Password confirmation is required.</p>
+        }
+        @if(signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.['minlength']){
+          <p class="text-sm text-red-600 mt-1">Password confirmation must be at least 8 characters long.</p>
+        }
+      </div>
+
+
+      <button class="w-full mb-3 py-3 btn bg-black text-white hover:cursor-pointer hover:bg-neutral-800" [disabled]="signupForm.invalid">Signup</button>
+
+      @if(errorMessage){
+        <p class="text-sm text-red-600 text-center">{{ errorMessage }}</p>
+      }
+
+      <p class="text-center text-neutral-600">Already have an account?
+        <a class="text-black font-semibold hover:cursor-pointer hover:underline">Login</a>
+      </p>
+    </form>
+  </div>
+
+</div>
